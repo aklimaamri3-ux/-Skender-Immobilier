@@ -29,6 +29,7 @@ export function ProjectFilters() {
   const [status, setStatus] = useState(searchParams.get("status") ?? "");
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
+  const [minSurface, setMinSurface] = useState(searchParams.get("minSurface") ?? "");
 
   function applyFilters() {
     const params = new URLSearchParams();
@@ -37,6 +38,7 @@ export function ProjectFilters() {
     if (status) params.set("status", status);
     if (minPrice) params.set("minPrice", minPrice);
     if (maxPrice) params.set("maxPrice", maxPrice);
+    if (minSurface) params.set("minSurface", minSurface);
     router.push(`/projets?${params.toString()}`);
   }
 
@@ -46,6 +48,7 @@ export function ProjectFilters() {
     setStatus("");
     setMinPrice("");
     setMaxPrice("");
+    setMinSurface("");
     router.push("/projets");
   }
 
@@ -91,6 +94,13 @@ export function ProjectFilters() {
         type="number"
         value={maxPrice}
         onChange={(e) => setMaxPrice(e.target.value)}
+        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
+      />
+      <input
+        placeholder="Surface min (m²)"
+        type="number"
+        value={minSurface}
+        onChange={(e) => setMinSurface(e.target.value)}
         className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
       />
       <div className="flex gap-2 lg:col-span-6">

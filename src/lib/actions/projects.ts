@@ -42,6 +42,7 @@ export async function saveProject(formData: FormData) {
       ? Number(formData.get("longitude"))
       : null,
     video_url: formData.get("video_url")?.toString() || null,
+    nearby_points: formData.get("nearby_points")?.toString() || null,
     seo_title: formData.get("seo_title")?.toString() || null,
     seo_description: formData.get("seo_description")?.toString() || null,
   };

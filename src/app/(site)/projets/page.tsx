@@ -21,6 +21,7 @@ export default async function ProjectsPage({
     status: params.status,
     minPrice: params.minPrice ? Number(params.minPrice) : undefined,
     maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
+    minSurface: params.minSurface ? Number(params.minSurface) : undefined,
   });
 
   return (

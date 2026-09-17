@@ -35,6 +35,7 @@ export interface ProjectFilters {
   status?: string;
   minPrice?: number;
   maxPrice?: number;
+  minSurface?: number;
 }
 
 export async function getPublishedProjects(filters: ProjectFilters = {}) {
@@ -67,6 +68,12 @@ export async function getPublishedProjects(filters: ProjectFilters = {}) {
   if (filters.type) {
     projects = projects.filter((p) =>
       p.properties?.some((prop) => prop.type === filters.type)
+    );
+  }
+
+  if (filters.minSurface) {
+    projects = projects.filter((p) =>
+      p.properties?.some((prop) => (prop.surface ?? 0) >= filters.minSurface!)
     );
   }
 

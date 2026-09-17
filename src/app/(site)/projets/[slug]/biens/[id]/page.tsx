@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LightboxGallery } from "@/components/shared/lightbox-gallery";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { formatPrice, whatsappLink } from "@/lib/utils";
+import { formatPrice, statusDot, telLink, whatsappLink } from "@/lib/utils";
 import { getPropertyById, getSettings } from "@/lib/data/public";
 
 const statusLabels: Record<string, string> = {
@@ -82,7 +82,7 @@ export default async function PropertyDetailPage({
           {property.reference}
         </h1>
         <span className="rounded-full border border-or/30 px-4 py-1 text-sm text-or-clair">
-          {statusLabels[property.status]}
+          {statusDot[property.status]} {statusLabels[property.status]}
         </span>
       </div>
 
@@ -130,9 +130,14 @@ export default async function PropertyDetailPage({
             <p className="mb-4 font-display text-2xl font-bold text-or-clair">
               {formatPrice(property.price)}
             </p>
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-gold w-full">
-              Contacter sur WhatsApp
-            </a>
+            <div className="flex flex-col gap-3">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-gold w-full">
+                Contacter sur WhatsApp
+              </a>
+              <a href={telLink(settings.phone)} className="btn-outline-gold w-full">
+                Appeler
+              </a>
+            </div>
           </div>
 
           <div className="card-premium p-6">

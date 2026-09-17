@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CalendarCheck2, Home, MapPin } from "lucide-react";
+import { CalendarCheck2, Home, MapPin, Phone } from "lucide-react";
 import { LightboxGallery } from "@/components/shared/lightbox-gallery";
 import { PropertyCard } from "@/components/property/property-card";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { formatDate, formatPrice, whatsappLink } from "@/lib/utils";
+import { formatDate, formatPrice, telLink, toEmbedVideoUrl, whatsappLink } from "@/lib/utils";
 import { getProjectBySlug, getSettings } from "@/lib/data/public";
 
 export async function generateMetadata({
@@ -58,6 +58,7 @@ export default async function ProjectDetailPage({
     settings,
     `Bonjour, je suis intéressé(e) par le projet ${project.name}.`
   );
+  const embedVideoUrl = project.video_url ? toEmbedVideoUrl(project.video_url) : null;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -124,6 +125,22 @@ export default async function ProjectDetailPage({
             </div>
           )}
 
+          {embedVideoUrl && (
+            <div className="mt-12">
+              <h2 className="mb-4 font-display text-2xl font-semibold">Vidéo</h2>
+              <div className="aspect-video overflow-hidden rounded-xl border border-or/20">
+                <iframe
+                  title={`Vidéo — ${project.name}`}
+                  className="h-full w-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  src={embedVideoUrl}
+                />
+              </div>
+            </div>
+          )}
+
           {properties.length > 0 && (
             <div className="mt-12">
               <h2 className="mb-4 font-display text-2xl font-semibold">
@@ -152,6 +169,16 @@ export default async function ProjectDetailPage({
                   src={`https://www.google.com/maps?q=${project.latitude},${project.longitude}&z=15&output=embed`}
                 />
               </div>
+              {project.nearby_points && (
+                <div className="mt-4 rounded-lg border border-or/15 p-4">
+                  <p className="mb-2 text-sm font-semibold text-or-clair">
+                    À proximité
+                  </p>
+                  <p className="whitespace-pre-line text-sm text-blanc/70">
+                    {project.nearby_points}
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -165,6 +192,9 @@ export default async function ProjectDetailPage({
             <div className="flex flex-col gap-3">
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-gold">
                 <Home size={18} /> Contacter sur WhatsApp
+              </a>
+              <a href={telLink(settings.phone)} className="btn-outline-gold">
+                <Phone size={18} /> Appeler
               </a>
               <Link href="#demander-visite" className="btn-outline-gold">
                 <CalendarCheck2 size={18} /> Demander une visite

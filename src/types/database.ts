@@ -44,6 +44,7 @@ export interface Project {
   latitude: number | null;
   longitude: number | null;
   video_url: string | null;
+  nearby_points: string | null;
   seo_title: string | null;
   seo_description: string | null;
   created_at: string;

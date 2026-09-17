@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, statusDot } from "@/lib/utils";
 import type { Property, PropertyImage } from "@/types/database";
 
 const statusStyles: Record<string, string> = {
@@ -46,7 +46,7 @@ export function PropertyCard({
         <span
           className={`absolute left-3 top-3 rounded-full border px-3 py-1 text-xs font-medium ${statusStyles[property.status]}`}
         >
-          {statusLabels[property.status]}
+          {statusDot[property.status]} {statusLabels[property.status]}
         </span>
       </div>
       <div className="flex flex-1 flex-col p-4">

@@ -26,9 +26,15 @@ export default async function HomePage() {
       getGalleryImages(),
     ]);
 
+  const stats = {
+    projects: projects.length,
+    apartments: projects.reduce((sum, p) => sum + (p.apartments_count ?? 0), 0),
+    villas: projects.reduce((sum, p) => sum + (p.villas_count ?? 0), 0),
+  };
+
   return (
     <>
-      <Hero />
+      <Hero stats={stats} />
       <HeroFeatures />
       <FeaturedProject project={featuredProject} />
       <AboutSection settings={settings} />

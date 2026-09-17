@@ -30,3 +30,30 @@ export function telLink(phone: string) {
 export function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
+
+export function toEmbedVideoUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("youtube.com")) {
+      const id = u.searchParams.get("v");
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (u.hostname.includes("youtu.be")) {
+      const id = u.pathname.replace("/", "");
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (u.hostname.includes("vimeo.com")) {
+      const id = u.pathname.replace("/", "");
+      return id ? `https://player.vimeo.com/video/${id}` : null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export const statusDot: Record<string, string> = {
+  disponible: "🟢",
+  reserve: "🟠",
+  vendu: "🔴",
+};

@@ -109,6 +109,16 @@ export function ProjectForm({
         />
       </Field>
 
+      <Field label="À proximité (écoles, commerces, transport... — une ligne par point)">
+        <textarea
+          name="nearby_points"
+          rows={4}
+          placeholder={"École primaire — 5 min\nSupermarché — 3 min\nArrêt de bus — 2 min"}
+          defaultValue={project?.nearby_points ?? ""}
+          className="input"
+        />
+      </Field>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Titre SEO">
           <input name="seo_title" defaultValue={project?.seo_title ?? ""} className="input" />

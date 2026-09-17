@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
+import { FacebookIcon, InstagramIcon } from "@/components/shared/social-icons";
 import { getPublishedProjects, getSettings } from "@/lib/data/public";
+import { telLink, whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -24,15 +26,55 @@ export default async function ContactPage() {
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
         <div>
           <ul className="space-y-5 text-blanc/80">
-            <li className="flex items-center gap-3">
-              <Phone size={20} className="text-or" /> {settings.phone}
+            <li>
+              <a href={telLink(settings.phone)} className="flex items-center gap-3 hover:text-or-clair">
+                <Phone size={20} className="text-or" /> {settings.phone}
+              </a>
             </li>
-            <li className="flex items-center gap-3">
-              <Mail size={20} className="text-or" /> {settings.email}
+            <li>
+              <a
+                href={whatsappLink(settings, `Bonjour ${settings.name}, je souhaite avoir plus d'informations.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 hover:text-or-clair"
+              >
+                <MessageCircle size={20} className="text-or" /> WhatsApp
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${settings.email}`} className="flex items-center gap-3 hover:text-or-clair">
+                <Mail size={20} className="text-or" /> {settings.email}
+              </a>
             </li>
             <li className="flex items-start gap-3">
               <MapPin size={20} className="mt-0.5 text-or" /> {settings.address}
             </li>
+            {(settings.facebook || settings.instagram) && (
+              <li className="flex items-center gap-3 pt-2">
+                {settings.facebook && (
+                  <a
+                    href={settings.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-or/30 p-2 text-or-clair hover:bg-or/10"
+                    aria-label="Facebook"
+                  >
+                    <FacebookIcon size={16} />
+                  </a>
+                )}
+                {settings.instagram && (
+                  <a
+                    href={settings.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-or/30 p-2 text-or-clair hover:bg-or/10"
+                    aria-label="Instagram"
+                  >
+                    <InstagramIcon size={16} />
+                  </a>
+                )}
+              </li>
+            )}
           </ul>
 
           <div className="mt-8 aspect-video overflow-hidden rounded-xl border border-or/20">
