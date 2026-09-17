@@ -9,7 +9,8 @@ export function PropertyForm({
   projects: Pick<Project, "id" | "name">[];
 }) {
   return (
-    <form action={saveProperty} className="space-y-6" encType="multipart/form-data">
+    <>
+    <form action={saveProperty} className="space-y-6">
       {property && <input type="hidden" name="id" value={property.id} />}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -121,8 +122,13 @@ export function PropertyForm({
         <input type="file" name="photos" accept="image/*" multiple className="input" />
       </Field>
 
-      {property?.property_images && property.property_images.length > 0 && (
-        <div>
+      <button type="submit" className="btn-gold">
+        Enregistrer le bien
+      </button>
+    </form>
+
+    {property?.property_images && property.property_images.length > 0 && (
+        <div className="mt-6">
           <p className="mb-2 text-sm text-blanc/60">Photos existantes</p>
           <div className="grid grid-cols-4 gap-3 sm:grid-cols-6">
             {property.property_images.map((img) => (
@@ -147,12 +153,8 @@ export function PropertyForm({
             ))}
           </div>
         </div>
-      )}
-
-      <button type="submit" className="btn-gold">
-        Enregistrer le bien
-      </button>
-    </form>
+    )}
+    </>
   );
 }
 

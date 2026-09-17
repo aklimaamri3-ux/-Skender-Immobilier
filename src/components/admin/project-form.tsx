@@ -7,7 +7,8 @@ export function ProjectForm({
   project?: Project & { project_images?: ProjectImage[] };
 }) {
   return (
-    <form action={saveProject} className="space-y-6" encType="multipart/form-data">
+    <>
+    <form action={saveProject} className="space-y-6">
       {project && <input type="hidden" name="id" value={project.id} />}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -144,8 +145,13 @@ export function ProjectForm({
         <input type="file" name="gallery_images" accept="image/*" multiple className="input" />
       </Field>
 
-      {project?.project_images && project.project_images.length > 0 && (
-        <div>
+      <button type="submit" className="btn-gold">
+        Enregistrer le projet
+      </button>
+    </form>
+
+    {project?.project_images && project.project_images.length > 0 && (
+        <div className="mt-6">
           <p className="mb-2 text-sm text-blanc/60">Images existantes</p>
           <div className="grid grid-cols-4 gap-3 sm:grid-cols-6">
             {project.project_images.map((img) => (
@@ -170,12 +176,8 @@ export function ProjectForm({
             ))}
           </div>
         </div>
-      )}
-
-      <button type="submit" className="btn-gold">
-        Enregistrer le projet
-      </button>
-    </form>
+    )}
+    </>
   );
 }
 
