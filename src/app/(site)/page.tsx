@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/hero";
+import { HeroFeatures } from "@/components/home/hero-features";
 import { FeaturedProject } from "@/components/home/featured-project";
 import { AboutSection } from "@/components/home/about-section";
 import { ServicesSection } from "@/components/home/services-section";
@@ -28,6 +29,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <HeroFeatures />
       <FeaturedProject project={featuredProject} />
       <AboutSection settings={settings} />
       <ServicesSection />
