@@ -4,6 +4,7 @@ import { LightboxGallery } from "@/components/shared/lightbox-gallery";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
 import { formatPrice, statusDot, telLink, whatsappLink } from "@/lib/utils";
 import { getPropertyById, getSettings } from "@/lib/data/public";
+import { trackPageView } from "@/lib/actions/track";
 
 const statusLabels: Record<string, string> = {
   disponible: "Disponible",
@@ -38,6 +39,12 @@ export default async function PropertyDetailPage({
   ]);
 
   if (!property) notFound();
+
+  void trackPageView({
+    path: `/projets/${slug}/biens/${property.id}`,
+    projectId: property.project_id,
+    propertyId: property.id,
+  });
 
   const project = property.projects;
   const galleryItems = (property.property_images ?? []).map((img) => ({

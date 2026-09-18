@@ -8,6 +8,7 @@ import { PropertyCard } from "@/components/property/property-card";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
 import { formatDate, formatPrice, telLink, toEmbedVideoUrl, whatsappLink } from "@/lib/utils";
 import { getProjectBySlug, getSettings } from "@/lib/data/public";
+import { trackPageView } from "@/lib/actions/track";
 
 export async function generateMetadata({
   params,
@@ -42,6 +43,8 @@ export default async function ProjectDetailPage({
   ]);
 
   if (!project) notFound();
+
+  void trackPageView({ path: `/projets/${project.slug}`, projectId: project.id });
 
   const properties = project.properties ?? [];
   const disponibles = properties.filter((p) => p.status === "disponible").length;

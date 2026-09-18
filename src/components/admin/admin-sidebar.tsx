@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  BarChart3,
   Building2,
   CalendarClock,
   Home,
@@ -20,11 +21,18 @@ const links = [
   { href: "/admin/properties", label: "Biens", icon: Home },
   { href: "/admin/inquiries", label: "Demandes", icon: Inbox },
   { href: "/admin/appointments", label: "Rendez-vous", icon: CalendarClock },
+  { href: "/admin/stats", label: "Statistiques", icon: BarChart3 },
   { href: "/admin/reviews", label: "Avis clients", icon: Star },
   { href: "/admin/settings", label: "Contenu du site", icon: Settings },
 ];
 
-export function AdminSidebar({ adminName }: { adminName: string }) {
+export function AdminSidebar({
+  adminName,
+  newInquiriesCount,
+}: {
+  adminName: string;
+  newInquiriesCount: number;
+}) {
   const pathname = usePathname();
 
   return (
@@ -49,7 +57,13 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
                   : "text-blanc/70 hover:bg-charbon hover:text-blanc"
               }`}
             >
-              <Icon size={18} /> {label}
+              <Icon size={18} />
+              <span className="flex-1">{label}</span>
+              {href === "/admin/inquiries" && newInquiriesCount > 0 && (
+                <span className="rounded-full bg-or px-2 py-0.5 text-xs font-semibold text-noir">
+                  {newInquiriesCount}
+                </span>
+              )}
             </Link>
           );
         })}
