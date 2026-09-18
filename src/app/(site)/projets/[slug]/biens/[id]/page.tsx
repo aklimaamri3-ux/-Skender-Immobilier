@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { LightboxGallery } from "@/components/shared/lightbox-gallery";
+import { Bath, BedDouble, Car, Compass, Layers, Maximize, MessageCircle, Phone } from "lucide-react";
+import { PropertyGallery } from "@/components/property/property-gallery";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
 import { formatPrice, statusDot, telLink, toEmbed3DUrl, whatsappLink } from "@/lib/utils";
@@ -53,7 +54,6 @@ export default async function PropertyDetailPage({
   const galleryItems = (property.property_images ?? []).map((img) => ({
     id: img.id,
     url: img.url,
-    caption: property.reference,
   }));
 
   const waLink = whatsappLink(
@@ -77,6 +77,13 @@ export default async function PropertyDetailPage({
     },
   };
 
+  const stats = [
+    { icon: Maximize, label: "Surface", value: `${property.surface} m²` },
+    { icon: BedDouble, label: "Chambres", value: property.bedrooms },
+    { icon: Bath, label: "Salles de bain", value: property.bathrooms },
+    ...(property.has_parking ? [{ icon: Car, label: "Parking", value: "Oui" }] : []),
+  ];
+
   return (
     <div className="section-container py-16">
       <script
@@ -92,40 +99,45 @@ export default async function PropertyDetailPage({
         ]}
       />
 
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-or-clair">
-        {project?.name}
-      </p>
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-3xl font-bold sm:text-4xl">
-          {property.reference}
-        </h1>
-        <span className="rounded-full border border-or/30 px-4 py-1 text-sm text-or-clair">
-          {statusDot[property.status]} {statusLabels[property.status]}
-        </span>
-      </div>
-
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          {galleryItems.length > 0 ? (
-            <LightboxGallery items={galleryItems} />
-          ) : (
-            <div className="flex aspect-video items-center justify-center rounded-xl border border-or/15 bg-charbon text-blanc/40">
-              Photos à venir
-            </div>
-          )}
+          <PropertyGallery items={galleryItems} alt={property.reference} />
 
-          <p className="mt-8 leading-relaxed text-blanc/75">
-            {property.description}
-          </p>
+          <div className="mb-2 mt-8 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-or-clair">
+                {project?.name}
+              </p>
+              <h1 className="mt-1 font-display text-3xl font-bold sm:text-4xl">
+                {property.reference}
+              </h1>
+            </div>
+            <span className="rounded-full border border-or/30 px-4 py-1 text-sm text-or-clair">
+              {statusDot[property.status]} {statusLabels[property.status]}
+            </span>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-4">
+            {stats.map(({ icon: Icon, label, value }) => (
+              <div
+                key={label}
+                className="flex items-center gap-3 rounded-lg border border-or/15 px-4 py-3"
+              >
+                <Icon size={20} className="text-or" />
+                <div>
+                  <p className="font-display text-lg font-bold leading-none">{value}</p>
+                  <p className="mt-1 text-xs uppercase tracking-wide text-blanc/50">{label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 leading-relaxed text-blanc/75">{property.description}</p>
 
           <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            <Field label="Type" value={property.type} />
-            <Field label="Surface" value={`${property.surface} m²`} />
-            <Field label="Chambres" value={property.bedrooms} />
-            <Field label="Salles de bain" value={property.bathrooms} />
-            <Field label="Étage" value={property.floor ?? "—"} />
-            <Field label="Orientation" value={property.orientation ?? "—"} />
-            <Field label="Parking" value={property.has_parking ? "Oui" : "Non"} />
+            <Field icon={Layers} label="Type" value={property.type} />
+            <Field icon={Layers} label="Étage" value={property.floor ?? "—"} />
+            <Field icon={Compass} label="Orientation" value={property.orientation ?? "—"} />
           </dl>
 
           {property.plan_3d_url && (
@@ -159,19 +171,19 @@ export default async function PropertyDetailPage({
 
           {property.plan_url && (
             <div className="mt-8">
-              <h2 className="mb-4 font-display text-xl font-semibold">Plan</h2>
+              <h2 className="mb-4 font-display text-xl font-semibold">Plan de l&apos;appartement</h2>
               <a
                 href={property.plan_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative block aspect-video w-full overflow-hidden rounded-xl border border-or/20"
+                className="relative block aspect-video w-full max-w-md overflow-hidden rounded-xl border border-or/20 bg-charbon"
               >
                 <Image
                   src={property.plan_url}
                   alt="Plan du bien"
                   fill
                   className="object-contain"
-                  sizes="(min-width: 1024px) 66vw, 100vw"
+                  sizes="400px"
                 />
               </a>
             </div>
@@ -185,11 +197,16 @@ export default async function PropertyDetailPage({
               {formatPrice(property.price)}
             </p>
             <div className="flex flex-col gap-3">
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-gold w-full">
-                Contacter sur WhatsApp
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-[#25D366] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-105"
+              >
+                <MessageCircle size={18} /> Contacter sur WhatsApp
               </a>
               <a href={telLink(settings.phone)} className="btn-outline-gold w-full">
-                Appeler
+                <Phone size={18} /> Appeler
               </a>
             </div>
           </div>
@@ -213,11 +230,22 @@ export default async function PropertyDetailPage({
   );
 }
 
-function Field({ label, value }: { label: string; value: string | number }) {
+function Field({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  label: string;
+  value: string | number;
+}) {
   return (
-    <div className="rounded-lg border border-or/15 p-4">
-      <dt className="text-xs uppercase tracking-wide text-blanc/50">{label}</dt>
-      <dd className="mt-1 font-medium text-blanc">{value}</dd>
+    <div className="flex items-center gap-3 rounded-lg border border-or/15 p-4">
+      <Icon size={18} className="shrink-0 text-or" />
+      <div>
+        <dt className="text-xs uppercase tracking-wide text-blanc/50">{label}</dt>
+        <dd className="mt-0.5 font-medium text-blanc">{value}</dd>
+      </div>
     </div>
   );
 }
