@@ -38,8 +38,8 @@ export function Hero({
             Immobilier premium en Algérie
           </p>
           <h1
-            className="max-w-3xl font-display text-4xl font-bold leading-tight sm:text-6xl animate-fade-up"
-            style={{ animationDelay: "0.1s" }}
+            className="max-w-3xl font-display text-4xl font-bold leading-tight text-blanc-pur sm:text-6xl animate-fade-up"
+            style={{ animationDelay: "0.1s", textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
             <span className="gold-gradient-text">SKENDER</span> IMMOBILIER
           </h1>
