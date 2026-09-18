@@ -1,6 +1,20 @@
 @import "tailwindcss";
 
+/* Public site: light premium theme (warm white/beige + gold accent) */
 :root {
+  --color-noir: #faf7f1;
+  --color-noir-soft: #f2ebdd;
+  --color-charbon: #ffffff;
+  --color-charbon-light: #f7f2e7;
+  --color-or: #b8873a;
+  --color-or-clair: #9c7228;
+  --color-or-fonce: #7a5920;
+  --color-blanc: #241f18;
+  --color-blanc-pur: #000000;
+}
+
+/* Admin dashboard keeps the original dark premium theme */
+.theme-dark {
   --color-noir: #0b0b0d;
   --color-noir-soft: #131316;
   --color-charbon: #1c1c20;

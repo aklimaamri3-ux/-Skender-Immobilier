@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { SlidersHorizontal } from "lucide-react";
 
 const statusOptions = [
   { value: "", label: "Tous les statuts" },
@@ -30,6 +31,9 @@ export function ProjectFilters() {
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
   const [minSurface, setMinSurface] = useState(searchParams.get("minSurface") ?? "");
+  const [showMore, setShowMore] = useState(
+    Boolean(searchParams.get("minPrice") || searchParams.get("maxPrice") || searchParams.get("minSurface"))
+  );
 
   function applyFilters() {
     const params = new URLSearchParams();
@@ -53,57 +57,66 @@ export function ProjectFilters() {
   }
 
   return (
-    <div className="card-premium mb-10 grid grid-cols-1 gap-4 p-5 sm:grid-cols-2 lg:grid-cols-6">
-      <input
-        placeholder="Localisation"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or lg:col-span-2"
-      />
-      <select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
+    <div className="card-premium mb-10 space-y-4 p-5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <input
+          placeholder="Localisation"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="input"
+        />
+        <select value={type} onChange={(e) => setType(e.target.value)} className="input">
+          {typeOptions.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="input">
+          {statusOptions.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setShowMore((v) => !v)}
+        className="flex items-center gap-2 text-sm text-or-clair hover:underline"
       >
-        {typeOptions.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
-      >
-        {statusOptions.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <input
-        placeholder="Prix min"
-        type="number"
-        value={minPrice}
-        onChange={(e) => setMinPrice(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
-      />
-      <input
-        placeholder="Prix max"
-        type="number"
-        value={maxPrice}
-        onChange={(e) => setMaxPrice(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
-      />
-      <input
-        placeholder="Surface min (m²)"
-        type="number"
-        value={minSurface}
-        onChange={(e) => setMinSurface(e.target.value)}
-        className="rounded-md border border-or/20 bg-noir px-3 py-2 text-sm text-blanc outline-none focus:border-or"
-      />
-      <div className="flex gap-2 lg:col-span-6">
+        <SlidersHorizontal size={14} />
+        {showMore ? "Moins de filtres" : "Plus de filtres (prix, surface)"}
+      </button>
+
+      {showMore && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <input
+            placeholder="Prix min"
+            type="number"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            className="input"
+          />
+          <input
+            placeholder="Prix max"
+            type="number"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            className="input"
+          />
+          <input
+            placeholder="Surface min (m²)"
+            type="number"
+            value={minSurface}
+            onChange={(e) => setMinSurface(e.target.value)}
+            className="input"
+          />
+        </div>
+      )}
+
+      <div className="flex gap-2">
         <button onClick={applyFilters} className="btn-gold text-sm">
           Filtrer
         </button>

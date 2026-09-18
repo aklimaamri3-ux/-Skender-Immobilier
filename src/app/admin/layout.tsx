@@ -18,7 +18,7 @@ export default function AdminRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" dir="ltr" className="h-full">
+    <html lang="fr" dir="ltr" className="theme-dark h-full">
       <body className={`${inter.variable} min-h-full bg-noir text-blanc antialiased`}>
         {children}
       </body>
