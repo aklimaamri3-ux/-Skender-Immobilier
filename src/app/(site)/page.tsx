@@ -15,15 +15,17 @@ import {
   getPublishedReviews,
   getSettings,
 } from "@/lib/data/public";
+import { getLocale } from "@/i18n/get-locale";
 
 export default async function HomePage() {
-  const [settings, featuredProject, projects, reviews, gallery] =
+  const [settings, featuredProject, projects, reviews, gallery, locale] =
     await Promise.all([
       getSettings(),
       getFeaturedProject(),
       getPublishedProjects(),
       getPublishedReviews(),
       getGalleryImages(),
+      getLocale(),
     ]);
 
   const stats = {
@@ -43,6 +45,7 @@ export default async function HomePage() {
         stats={stats}
         heroImageUrl={heroImage}
         location={featuredProject?.location}
+        locale={locale}
       />
       <HeroFeatures />
       <FeaturedProject project={featuredProject} />

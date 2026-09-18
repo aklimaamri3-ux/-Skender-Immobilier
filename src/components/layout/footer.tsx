@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/shared/social-icons";
+import { getDictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 import type { AgencySettings } from "@/types/database";
 
-export function Footer({ settings }: { settings: AgencySettings }) {
+export function Footer({
+  settings,
+  locale,
+}: {
+  settings: AgencySettings;
+  locale: Locale;
+}) {
   const year = new Date().getFullYear();
+  const dict = getDictionary(locale);
 
   return (
     <footer className="border-t border-or/15 bg-noir-soft">
@@ -45,16 +54,16 @@ export function Footer({ settings }: { settings: AgencySettings }) {
 
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-or-clair">
-            Liens rapides
+            {dict.footer.quickLinks}
           </p>
           <ul className="space-y-2 text-sm text-blanc/70">
-            <li><Link href="/" className="hover:text-or-clair">Accueil</Link></li>
-            <li><Link href="/projets" className="hover:text-or-clair">Nos projets</Link></li>
-            <li><Link href="/location" className="hover:text-or-clair">Location</Link></li>
-            <li><Link href="/galerie" className="hover:text-or-clair">Galerie</Link></li>
-            <li><Link href="/faq" className="hover:text-or-clair">FAQ</Link></li>
-            <li><Link href="/a-propos" className="hover:text-or-clair">À propos</Link></li>
-            <li><Link href="/contact" className="hover:text-or-clair">Contact</Link></li>
+            <li><Link href="/" className="hover:text-or-clair">{dict.nav.home}</Link></li>
+            <li><Link href="/projets" className="hover:text-or-clair">{dict.nav.projects}</Link></li>
+            <li><Link href="/location" className="hover:text-or-clair">{dict.nav.location}</Link></li>
+            <li><Link href="/galerie" className="hover:text-or-clair">{dict.nav.gallery}</Link></li>
+            <li><Link href="/faq" className="hover:text-or-clair">{dict.nav.faq}</Link></li>
+            <li><Link href="/a-propos" className="hover:text-or-clair">{dict.nav.about}</Link></li>
+            <li><Link href="/contact" className="hover:text-or-clair">{dict.nav.contact}</Link></li>
           </ul>
         </div>
 
@@ -86,7 +95,7 @@ export function Footer({ settings }: { settings: AgencySettings }) {
       </div>
 
       <div className="border-t border-or/10 py-5 text-center text-xs text-blanc/50">
-        © {year} {settings.name} — Tous droits réservés.
+        © {year} {settings.name} — {dict.footer.rights}
       </div>
     </footer>
   );

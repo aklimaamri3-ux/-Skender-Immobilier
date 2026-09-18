@@ -7,16 +7,22 @@ import {
   LayoutGrid,
   MapPin,
 } from "lucide-react";
+import { getDictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
 
 export function Hero({
   stats,
   heroImageUrl,
   location,
+  locale,
 }: {
   stats: { projects: number; apartments: number; villas: number };
   heroImageUrl?: string | null;
   location?: string;
+  locale: Locale;
 }) {
+  const dict = getDictionary(locale);
+
   return (
     <section className="theme-dark relative flex min-h-[85vh] flex-col overflow-hidden bg-noir">
       {heroImageUrl ? (
@@ -35,7 +41,7 @@ export function Hero({
         <div>
           <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.4em] text-or-clair animate-fade-up">
             <span className="h-px w-10 bg-or-clair/60" />
-            Immobilier premium en Algérie
+            {dict.hero.eyebrow}
           </p>
           <h1
             className="max-w-3xl font-display text-4xl font-bold leading-tight text-blanc-pur sm:text-6xl animate-fade-up"
@@ -47,7 +53,7 @@ export function Hero({
             className="mt-4 max-w-xl text-lg font-medium uppercase tracking-[0.15em] text-blanc/90 animate-fade-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Votre projet, notre engagement
+            {dict.hero.slogan}
           </p>
 
           <div
@@ -57,17 +63,19 @@ export function Hero({
             <div className="flex items-center gap-2 text-blanc/85">
               <LayoutGrid size={20} className="text-or" />
               <span className="font-display text-xl font-bold text-or-clair">{stats.projects}</span>
-              <span className="text-sm uppercase tracking-wide">projet{stats.projects > 1 ? "s" : ""}</span>
+              <span className="text-sm uppercase tracking-wide">
+                {stats.projects > 1 ? dict.hero.statProjects : dict.hero.statProject}
+              </span>
             </div>
             <div className="flex items-center gap-2 text-blanc/85">
               <Building2 size={20} className="text-or" />
               <span className="font-display text-xl font-bold text-or-clair">{stats.apartments}</span>
-              <span className="text-sm uppercase tracking-wide">appartements</span>
+              <span className="text-sm uppercase tracking-wide">{dict.hero.statApartments}</span>
             </div>
             <div className="flex items-center gap-2 text-blanc/85">
               <HomeIcon size={20} className="text-or" />
               <span className="font-display text-xl font-bold text-or-clair">{stats.villas}</span>
-              <span className="text-sm uppercase tracking-wide">villas</span>
+              <span className="text-sm uppercase tracking-wide">{dict.hero.statVillas}</span>
             </div>
           </div>
 
@@ -76,10 +84,10 @@ export function Hero({
             style={{ animationDelay: "0.35s" }}
           >
             <Link href="/projets" className="btn-gold">
-              Découvrir nos projets <ArrowRight size={18} />
+              {dict.hero.discover} <ArrowRight size={18} className="flip-rtl" />
             </Link>
             <Link href="/contact#rendez-vous" className="btn-outline-gold">
-              Prendre rendez-vous <CalendarClock size={18} />
+              {dict.hero.appointment} <CalendarClock size={18} />
             </Link>
           </div>
         </div>

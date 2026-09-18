@@ -4,34 +4,38 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { getDictionary } from "@/i18n/dictionaries";
+import type { Locale } from "@/i18n/config";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
-const links = [
-  { href: "/", label: "Accueil" },
-  { href: "/projets", label: "Projets" },
-  { href: "/location", label: "Location" },
-  { href: "/galerie", label: "Galerie" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/a-propos", label: "À propos" },
-  { href: "/contact", label: "Contact" },
-];
-
-export function Header() {
+export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const dict = getDictionary(locale);
+
+  const links = [
+    { href: "/", label: dict.nav.home },
+    { href: "/projets", label: dict.nav.projects },
+    { href: "/location", label: dict.nav.location },
+    { href: "/galerie", label: dict.nav.gallery },
+    { href: "/faq", label: dict.nav.faq },
+    { href: "/a-propos", label: dict.nav.about },
+    { href: "/contact", label: dict.nav.contact },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-or/15 bg-noir/90 backdrop-blur">
-      <div className="section-container flex h-20 items-center justify-between">
+      <div className="section-container flex h-20 items-center justify-between gap-4">
         <Link href="/" className="flex flex-col leading-tight">
           <span className="font-display text-xl font-bold tracking-wide gold-gradient-text sm:text-2xl">
             SKENDER IMMOBILIER
           </span>
           <span className="hidden text-[0.65rem] uppercase tracking-[0.25em] text-blanc/60 sm:block">
-            Votre projet, notre engagement
+            {dict.hero.slogan}
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -43,18 +47,22 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <LanguageSwitcher locale={locale} />
           <Link href="/contact#rendez-vous" className="btn-gold text-sm">
-            Prendre rendez-vous
+            {dict.nav.appointment}
           </Link>
         </nav>
 
-        <button
-          aria-label="Ouvrir le menu"
-          className="text-blanc md:hidden"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <LanguageSwitcher locale={locale} />
+          <button
+            aria-label="Ouvrir le menu"
+            className="text-blanc"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -79,7 +87,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="btn-gold mt-2 text-sm"
             >
-              Prendre rendez-vous
+              {dict.nav.appointment}
             </Link>
           </div>
         </nav>

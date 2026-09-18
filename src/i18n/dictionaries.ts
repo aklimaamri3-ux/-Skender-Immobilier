@@ -5,7 +5,9 @@ export const dictionaries = {
     nav: {
       home: "Accueil",
       projects: "Projets",
+      location: "Location",
       gallery: "Galerie",
+      faq: "FAQ",
       contact: "Contact",
       about: "À propos",
       appointment: "Prendre rendez-vous",
@@ -15,8 +17,13 @@ export const dictionaries = {
       slogan: "VOTRE PROJET, NOTRE ENGAGEMENT",
       subtitle:
         "Des programmes immobiliers d'exception en Algérie, pensés pour votre confort et votre avenir.",
+      eyebrow: "Immobilier premium en Algérie",
       discover: "Découvrir nos projets",
       appointment: "Prendre rendez-vous",
+      statProject: "projet",
+      statProjects: "projets",
+      statApartments: "appartements",
+      statVillas: "villas",
     },
     sections: {
       featuredProject: "Projet à la une",
@@ -76,7 +83,9 @@ export const dictionaries = {
     nav: {
       home: "Home",
       projects: "Projects",
+      location: "Rent",
       gallery: "Gallery",
+      faq: "FAQ",
       contact: "Contact",
       about: "About",
       appointment: "Book an appointment",
@@ -86,8 +95,13 @@ export const dictionaries = {
       slogan: "YOUR PROJECT, OUR COMMITMENT",
       subtitle:
         "Exceptional real estate developments in Algeria, designed for your comfort and your future.",
+      eyebrow: "Premium real estate in Algeria",
       discover: "Discover our projects",
       appointment: "Book an appointment",
+      statProject: "project",
+      statProjects: "projects",
+      statApartments: "apartments",
+      statVillas: "villas",
     },
     sections: {
       featuredProject: "Featured project",
@@ -147,7 +161,9 @@ export const dictionaries = {
     nav: {
       home: "الرئيسية",
       projects: "المشاريع",
+      location: "الكراء",
       gallery: "معرض الصور",
+      faq: "الأسئلة الشائعة",
       contact: "اتصل بنا",
       about: "من نحن",
       appointment: "احجز موعدًا",
@@ -157,8 +173,13 @@ export const dictionaries = {
       slogan: "مشروعك، التزامنا",
       subtitle:
         "برامج عقارية استثنائية في الجزائر، مصممة من أجل راحتكم ومستقبلكم.",
+      eyebrow: "عقارات فاخرة في الجزائر",
       discover: "اكتشف مشاريعنا",
       appointment: "احجز موعدًا",
+      statProject: "مشروع",
+      statProjects: "مشاريع",
+      statApartments: "شقق",
+      statVillas: "فيلات",
     },
     sections: {
       featuredProject: "المشروع المميز",

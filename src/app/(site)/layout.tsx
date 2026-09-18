@@ -5,6 +5,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsappFloat } from "@/components/layout/whatsapp-float";
 import { getSettings } from "@/lib/data/public";
+import { getLocale } from "@/i18n/get-locale";
+import { localeDir } from "@/i18n/config";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,16 +63,17 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const settings = await getSettings();
+  const [settings, locale] = await Promise.all([getSettings(), getLocale()]);
+  const dir = localeDir[locale];
 
   return (
-    <html lang="fr" dir="ltr" className="h-full">
+    <html lang={locale} dir={dir} className="h-full">
       <body
         className={`${inter.variable} ${playfair.variable} min-h-full flex flex-col antialiased`}
       >
-        <Header />
+        <Header locale={locale} />
         <main className="flex-1">{children}</main>
-        <Footer settings={settings} />
+        <Footer settings={settings} locale={locale} />
         <WhatsappFloat settings={settings} />
       </body>
     </html>
