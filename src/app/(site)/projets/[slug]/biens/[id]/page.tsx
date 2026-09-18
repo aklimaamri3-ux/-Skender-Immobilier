@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { LightboxGallery } from "@/components/shared/lightbox-gallery";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
@@ -120,11 +121,18 @@ export default async function PropertyDetailPage({
           {property.plan_url && (
             <div className="mt-8">
               <h2 className="mb-4 font-display text-xl font-semibold">Plan</h2>
-              <a href={property.plan_url} target="_blank" rel="noopener noreferrer">
-                <img
+              <a
+                href={property.plan_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative block aspect-video w-full overflow-hidden rounded-xl border border-or/20"
+              >
+                <Image
                   src={property.plan_url}
                   alt="Plan du bien"
-                  className="max-w-full rounded-xl border border-or/20"
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 66vw, 100vw"
                 />
               </a>
             </div>
