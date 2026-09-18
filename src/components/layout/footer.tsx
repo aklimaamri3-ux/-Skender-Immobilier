@@ -50,7 +50,9 @@ export function Footer({ settings }: { settings: AgencySettings }) {
           <ul className="space-y-2 text-sm text-blanc/70">
             <li><Link href="/" className="hover:text-or-clair">Accueil</Link></li>
             <li><Link href="/projets" className="hover:text-or-clair">Nos projets</Link></li>
+            <li><Link href="/location" className="hover:text-or-clair">Location</Link></li>
             <li><Link href="/galerie" className="hover:text-or-clair">Galerie</Link></li>
+            <li><Link href="/faq" className="hover:text-or-clair">FAQ</Link></li>
             <li><Link href="/a-propos" className="hover:text-or-clair">À propos</Link></li>
             <li><Link href="/contact" className="hover:text-or-clair">Contact</Link></li>
           </ul>
