@@ -33,7 +33,7 @@ export default async function HomePage() {
   };
 
   const heroImage =
-    gallery.find((img) => img.url.includes("d8436a85"))?.url ??
+    gallery.find((img) => img.url.includes("c8b24e81"))?.url ??
     featuredProject?.cover_image_url ??
     null;
 
