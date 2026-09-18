@@ -1,4 +1,4 @@
-import { Building2, HandCoins, KeyRound, Wrench } from "lucide-react";
+import { Building2, HandCoins, KeyRound, KeySquare, Wrench } from "lucide-react";
 
 const services = [
   {
@@ -10,6 +10,11 @@ const services = [
     icon: KeyRound,
     title: "Vente de biens",
     text: "Accompagnement complet, de la visite à la remise des clés.",
+  },
+  {
+    icon: KeySquare,
+    title: "Location de biens",
+    text: "Mise en location d'appartements et de villas, gestion locative sereine.",
   },
   {
     icon: HandCoins,
@@ -31,10 +36,10 @@ export function ServicesSection() {
           Nos services
         </p>
         <h2 className="mb-12 font-display text-3xl font-bold sm:text-4xl">
-          Un accompagnement complet
+          Vente, location et accompagnement complet
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {services.map(({ icon: Icon, title, text }) => (
             <div key={title} className="card-premium p-6">
               <Icon className="mb-4 text-or" size={28} />
