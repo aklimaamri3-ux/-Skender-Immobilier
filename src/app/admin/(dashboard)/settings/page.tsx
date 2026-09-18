@@ -36,6 +36,15 @@ export default async function AdminSettingsPage() {
         <Field label="Présentation de l'agence">
           <textarea name="about" rows={5} defaultValue={settings.about} className="input" />
         </Field>
+        <Field label="Nombre de biens en location (affiché sur la page d'accueil)">
+          <input
+            type="number"
+            min={0}
+            name="rental_count"
+            defaultValue={settings.rental_count}
+            className="input"
+          />
+        </Field>
 
         <button type="submit" className="btn-gold">
           Enregistrer

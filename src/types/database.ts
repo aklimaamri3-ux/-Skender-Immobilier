@@ -133,6 +133,7 @@ export interface AgencySettings {
   facebook: string;
   instagram: string;
   about: string;
+  rental_count: number;
 }
 
 export interface ProjectWithRelations extends Project {

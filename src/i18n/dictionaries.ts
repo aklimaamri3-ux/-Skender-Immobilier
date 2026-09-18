@@ -24,6 +24,7 @@ export const dictionaries = {
       statProjects: "projets",
       statApartments: "appartements",
       statVillas: "villas",
+      statRental: "biens en location",
     },
     sections: {
       featuredProject: "Projet à la une",
@@ -102,6 +103,7 @@ export const dictionaries = {
       statProjects: "projects",
       statApartments: "apartments",
       statVillas: "villas",
+      statRental: "rentals",
     },
     sections: {
       featuredProject: "Featured project",
@@ -180,6 +182,7 @@ export const dictionaries = {
       statProjects: "مشاريع",
       statApartments: "شقق",
       statVillas: "فيلات",
+      statRental: "بيت للكراء",
     },
     sections: {
       featuredProject: "المشروع المميز",

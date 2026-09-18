@@ -24,9 +24,10 @@ export async function getSettings(): Promise<AgencySettings> {
     facebook: "",
     instagram: "",
     about: "",
+    rental_count: 12,
   };
 
-  return (data?.value as AgencySettings) ?? fallback;
+  return { ...fallback, ...(data?.value as Partial<AgencySettings> | undefined) };
 }
 
 export interface ProjectFilters {

@@ -4,6 +4,7 @@ import {
   Building2,
   CalendarClock,
   Home as HomeIcon,
+  Key,
   LayoutGrid,
   MapPin,
 } from "lucide-react";
@@ -16,7 +17,7 @@ export function Hero({
   location,
   locale,
 }: {
-  stats: { projects: number; apartments: number; villas: number };
+  stats: { projects: number; apartments: number; villas: number; rentals: number };
   heroImageUrl?: string | null;
   location?: string;
   locale: Locale;
@@ -76,6 +77,11 @@ export function Hero({
               <HomeIcon size={20} className="text-or" />
               <span className="font-display text-xl font-bold text-or-clair">{stats.villas}</span>
               <span className="text-sm uppercase tracking-wide">{dict.hero.statVillas}</span>
+            </div>
+            <div className="flex items-center gap-2 text-blanc/85">
+              <Key size={20} className="text-or" />
+              <span className="font-display text-xl font-bold text-or-clair">{stats.rentals}</span>
+              <span className="text-sm uppercase tracking-wide">{dict.hero.statRental}</span>
             </div>
           </div>
 

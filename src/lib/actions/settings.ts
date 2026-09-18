@@ -17,6 +17,7 @@ export async function saveSettings(formData: FormData) {
     facebook: formData.get("facebook")?.toString() ?? "",
     instagram: formData.get("instagram")?.toString() ?? "",
     about: formData.get("about")?.toString() ?? "",
+    rental_count: Number(formData.get("rental_count")) || 0,
   };
 
   await supabase

@@ -32,6 +32,7 @@ export default async function HomePage() {
     projects: projects.length,
     apartments: projects.reduce((sum, p) => sum + (p.apartments_count ?? 0), 0),
     villas: projects.reduce((sum, p) => sum + (p.villas_count ?? 0), 0),
+    rentals: settings.rental_count,
   };
 
   const heroImage =
