@@ -27,7 +27,7 @@ export function Hero({
         />
       ) : null}
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,11,13,0.55)_0%,rgba(11,11,13,0.7)_55%,rgba(11,11,13,0.96)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,11,13,0.88)_0%,rgba(11,11,13,0.75)_45%,rgba(11,11,13,0.4)_75%,rgba(11,11,13,0.25)_100%),linear-gradient(180deg,rgba(11,11,13,0.55)_0%,rgba(11,11,13,0.55)_55%,rgba(11,11,13,0.92)_100%)]"
         aria-hidden
       />
 
