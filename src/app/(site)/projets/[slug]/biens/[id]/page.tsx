@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { LightboxGallery } from "@/components/shared/lightbox-gallery";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { formatPrice, statusDot, telLink, whatsappLink } from "@/lib/utils";
+import { formatPrice, statusDot, telLink, toEmbed3DUrl, whatsappLink } from "@/lib/utils";
 import { getPropertyById, getSettings } from "@/lib/data/public";
 import { trackPageView } from "@/lib/actions/track";
 
@@ -48,6 +49,7 @@ export default async function PropertyDetailPage({
   });
 
   const project = property.projects;
+  const embed3dUrl = property.plan_3d_url ? toEmbed3DUrl(property.plan_3d_url) : null;
   const galleryItems = (property.property_images ?? []).map((img) => ({
     id: img.id,
     url: img.url,
@@ -80,6 +82,14 @@ export default async function PropertyDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <Breadcrumbs
+        items={[
+          { label: "Projets", href: "/projets" },
+          ...(project ? [{ label: project.name, href: `/projets/${slug}` }] : []),
+          { label: property.reference },
+        ]}
       />
 
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-or-clair">
@@ -117,6 +127,35 @@ export default async function PropertyDetailPage({
             <Field label="Orientation" value={property.orientation ?? "—"} />
             <Field label="Parking" value={property.has_parking ? "Oui" : "Non"} />
           </dl>
+
+          {property.plan_3d_url && (
+            <div className="mt-8">
+              <h2 className="mb-4 font-display text-xl font-semibold">
+                Visite virtuelle 3D
+              </h2>
+              {embed3dUrl ? (
+                <div className="aspect-video overflow-hidden rounded-xl border border-or/20">
+                  <iframe
+                    title="Visite virtuelle 3D"
+                    className="h-full w-full"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; xr-spatial-tracking"
+                    allowFullScreen
+                    src={embed3dUrl}
+                  />
+                </div>
+              ) : (
+                <a
+                  href={property.plan_3d_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline-gold"
+                >
+                  Voir la visite virtuelle 3D
+                </a>
+              )}
+            </div>
+          )}
 
           {property.plan_url && (
             <div className="mt-8">

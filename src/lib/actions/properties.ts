@@ -20,6 +20,7 @@ export async function saveProperty(formData: FormData) {
     price: Number(formData.get("price") ?? 0),
     has_parking: formData.get("has_parking") === "on",
     description: formData.get("description")?.toString() || null,
+    plan_3d_url: formData.get("plan_3d_url")?.toString() || null,
     status: formData.get("status")?.toString() ?? "disponible",
     is_published: formData.get("is_published") === "on",
   };

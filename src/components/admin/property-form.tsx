@@ -118,6 +118,15 @@ export function PropertyForm({
         <input type="file" name="plan" accept="image/*" className="input" />
       </Field>
 
+      <Field label="Plan 3D / Visite virtuelle (lien Matterport, Kuula, vidéo 360°...)">
+        <input
+          name="plan_3d_url"
+          placeholder="https://my.matterport.com/show/?m=..."
+          defaultValue={property?.plan_3d_url ?? ""}
+          className="input"
+        />
+      </Field>
+
       <Field label="Photos">
         <input type="file" name="photos" accept="image/*" multiple className="input" />
       </Field>

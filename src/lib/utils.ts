@@ -52,6 +52,19 @@ export function toEmbedVideoUrl(url: string): string | null {
   }
 }
 
+export function toEmbed3DUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("matterport.com")) return url;
+    if (u.hostname.includes("kuula.co")) return url;
+    const ytEmbed = toEmbedVideoUrl(url);
+    if (ytEmbed) return ytEmbed;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export const statusDot: Record<string, string> = {
   disponible: "🟢",
   reserve: "🟠",

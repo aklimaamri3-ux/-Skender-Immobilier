@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalendarCheck2, Home, MapPin, Phone } from "lucide-react";
 import { LightboxGallery } from "@/components/shared/lightbox-gallery";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { PropertyCard } from "@/components/property/property-card";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
 import { formatDate, formatPrice, telLink, toEmbedVideoUrl, whatsappLink } from "@/lib/utils";
@@ -107,7 +108,11 @@ export default async function ProjectDetailPage({
         </div>
       </div>
 
-      <div className="section-container mt-12 grid grid-cols-1 gap-12 lg:grid-cols-3">
+      <div className="section-container mt-6">
+        <Breadcrumbs items={[{ label: "Projets", href: "/projets" }, { label: project.name }]} />
+      </div>
+
+      <div className="section-container mt-6 grid grid-cols-1 gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <p className="text-blanc/75 leading-relaxed">{project.description}</p>
 

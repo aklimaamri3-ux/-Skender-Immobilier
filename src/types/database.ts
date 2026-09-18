@@ -74,6 +74,7 @@ export interface Property {
   has_parking: boolean;
   description: string | null;
   plan_url: string | null;
+  plan_3d_url: string | null;
   status: PropertyStatus;
   is_published: boolean;
   created_at: string;
