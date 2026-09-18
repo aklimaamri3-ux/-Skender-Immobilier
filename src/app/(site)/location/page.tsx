@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { KeySquare, MessageCircle, Phone } from "lucide-react";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
+import { ProjectCard } from "@/components/projects/project-card";
 import { getPublishedProjects, getSettings } from "@/lib/data/public";
 import { telLink, whatsappLink } from "@/lib/utils";
 
@@ -38,6 +39,11 @@ export default async function LocationPage() {
           résidences. Contactez-nous directement, nous vous orientons vers
           le bien qui correspond à vos besoins.
         </p>
+        {settings.rental_count > 0 && (
+          <p className="mt-4 font-display text-sm uppercase tracking-[0.2em] text-or-clair">
+            {settings.rental_count} biens actuellement disponibles en location
+          </p>
+        )}
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn-gold">
@@ -48,6 +54,19 @@ export default async function LocationPage() {
           </a>
         </div>
       </div>
+
+      {projects.length > 0 && (
+        <div className="mx-auto mt-16 max-w-5xl">
+          <h2 className="mb-6 text-center font-display text-2xl font-semibold">
+            Nos résidences
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mx-auto mt-14 max-w-xl card-premium p-6 sm:p-8">
         <h2 className="mb-6 text-center font-display text-xl font-semibold">
