@@ -7,7 +7,14 @@ import { LightboxGallery } from "@/components/shared/lightbox-gallery";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { PropertyCard } from "@/components/property/property-card";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { formatDate, formatPrice, telLink, toEmbedVideoUrl, whatsappLink } from "@/lib/utils";
+import {
+  formatDate,
+  formatPrice,
+  safeJsonLd,
+  telLink,
+  toEmbedVideoUrl,
+  whatsappLink,
+} from "@/lib/utils";
 import { getProjectBySlug, getSettings } from "@/lib/data/public";
 import { trackPageView } from "@/lib/actions/track";
 
@@ -82,7 +89,7 @@ export default async function ProjectDetailPage({
     <div className="pb-20">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       <div className="relative h-[50vh] min-h-[360px] w-full">

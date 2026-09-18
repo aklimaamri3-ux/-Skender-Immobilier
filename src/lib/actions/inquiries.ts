@@ -10,6 +10,10 @@ const typeLabels: Record<string, string> = {
   info: "Demande d'information",
 };
 
+function sanitizeForTelegram(value: string): string {
+  return value.replace(/[*_`[\]]/g, "").slice(0, 500);
+}
+
 const inquirySchema = z.object({
   firstName: z.string().min(1, "Le prénom est requis"),
   lastName: z.string().min(1, "Le nom est requis"),
@@ -95,15 +99,20 @@ async function notifyTelegram(
       projectName = project?.name ?? "";
     }
 
+    const name = sanitizeForTelegram(`${data.firstName} ${data.lastName}`);
+    const phone = sanitizeForTelegram(data.phone);
+    const email = sanitizeForTelegram(data.email ?? "");
+    const message = sanitizeForTelegram(data.message ?? "");
+
     let msg = `🏠 *${typeLabels[data.type] ?? "Nouvelle demande"} — SKENDER IMMOBILIER*\n`;
     msg += `━━━━━━━━━━━━━━\n`;
-    msg += `👤 *Nom:* ${data.firstName} ${data.lastName}\n`;
-    msg += `📞 *Téléphone:* ${data.phone}\n`;
-    if (data.email) msg += `✉️ *Email:* ${data.email}\n`;
-    if (projectName) msg += `🏗️ *Projet:* ${projectName}\n`;
-    if (propertyRef) msg += `🔑 *Bien:* ${propertyRef}\n`;
+    msg += `👤 *Nom:* ${name}\n`;
+    msg += `📞 *Téléphone:* ${phone}\n`;
+    if (email) msg += `✉️ *Email:* ${email}\n`;
+    if (projectName) msg += `🏗️ *Projet:* ${sanitizeForTelegram(projectName)}\n`;
+    if (propertyRef) msg += `🔑 *Bien:* ${sanitizeForTelegram(propertyRef)}\n`;
     if (data.desiredDate) msg += `📅 *Date souhaitée:* ${data.desiredDate}\n`;
-    if (data.message) msg += `📝 *Message:* ${data.message}\n`;
+    if (message) msg += `📝 *Message:* ${message}\n`;
     msg += `━━━━━━━━━━━━━━`;
 
     await sendTelegramMessage(msg);

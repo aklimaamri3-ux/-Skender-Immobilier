@@ -1,5 +1,9 @@
 import type { AgencySettings } from "@/types/database";
 
+export function safeJsonLd(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 export function formatPrice(value: number | null | undefined) {
   if (value === null || value === undefined) return "";
   return new Intl.NumberFormat("fr-DZ", {

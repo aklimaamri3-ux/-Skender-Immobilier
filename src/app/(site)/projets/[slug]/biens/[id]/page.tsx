@@ -5,7 +5,14 @@ import { Bath, BedDouble, Car, Compass, Layers, Maximize, MessageCircle, Phone }
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { formatPrice, statusDot, telLink, toEmbed3DUrl, whatsappLink } from "@/lib/utils";
+import {
+  formatPrice,
+  safeJsonLd,
+  statusDot,
+  telLink,
+  toEmbed3DUrl,
+  whatsappLink,
+} from "@/lib/utils";
 import { getPropertyById, getSettings } from "@/lib/data/public";
 import { trackPageView } from "@/lib/actions/track";
 
@@ -88,7 +95,7 @@ export default async function PropertyDetailPage({
     <div className="section-container py-16">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
 
       <Breadcrumbs
