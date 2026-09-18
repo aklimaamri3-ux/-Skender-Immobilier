@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { KeySquare, MessageCircle, Phone } from "lucide-react";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
-import { ProjectCard } from "@/components/projects/project-card";
-import { getPublishedProjects, getSettings } from "@/lib/data/public";
+import { PropertyCard } from "@/components/property/property-card";
+import {
+  getAvailableProperties,
+  getPublishedProjects,
+  getSettings,
+} from "@/lib/data/public";
 import { telLink, whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -12,9 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default async function LocationPage() {
-  const [settings, projects] = await Promise.all([
+  const [settings, projects, properties] = await Promise.all([
     getSettings(),
     getPublishedProjects(),
+    getAvailableProperties(),
   ]);
 
   const waLink = whatsappLink(
@@ -55,14 +60,24 @@ export default async function LocationPage() {
         </div>
       </div>
 
-      {projects.length > 0 && (
-        <div className="mx-auto mt-16 max-w-5xl">
+      {properties.length > 0 && (
+        <div className="mx-auto mt-16 max-w-6xl">
           <h2 className="mb-6 text-center font-display text-2xl font-semibold">
-            Nos résidences
+            Nos modèles disponibles
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {properties.map((property) => (
+              <div key={property.id}>
+                <PropertyCard
+                  property={property}
+                  projectSlug={property.projects?.slug ?? ""}
+                />
+                {property.projects?.name && (
+                  <p className="mt-2 text-center text-xs uppercase tracking-wide text-blanc/50">
+                    {property.projects.name} · {property.projects.location}
+                  </p>
+                )}
+              </div>
             ))}
           </div>
         </div>

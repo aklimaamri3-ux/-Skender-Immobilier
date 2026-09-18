@@ -120,6 +120,19 @@ export async function getProjectBySlug(slug: string) {
   return data as ProjectWithRelations | null;
 }
 
+export async function getAvailableProperties() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("properties")
+    .select("*, property_images(*), projects!inner(slug, name, location, is_published)")
+    .eq("status", "disponible")
+    .eq("projects.is_published", true)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return (data ?? []) as PropertyWithRelations[];
+}
+
 export async function getPropertyById(projectSlug: string, propertyId: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
