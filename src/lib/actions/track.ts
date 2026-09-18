@@ -8,9 +8,15 @@ export async function trackPageView(input: {
   propertyId?: string;
 }) {
   const supabase = await createClient();
-  await supabase.from("page_views").insert({
-    path: input.path,
-    project_id: input.projectId ?? null,
-    property_id: input.propertyId ?? null,
-  });
+  await supabase
+    .from("page_views")
+    .insert({
+      path: input.path,
+      project_id: input.projectId ?? null,
+      property_id: input.propertyId ?? null,
+    })
+    .then(
+      () => {},
+      () => {}
+    );
 }
