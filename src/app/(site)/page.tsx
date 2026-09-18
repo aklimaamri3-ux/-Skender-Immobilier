@@ -32,9 +32,18 @@ export default async function HomePage() {
     villas: projects.reduce((sum, p) => sum + (p.villas_count ?? 0), 0),
   };
 
+  const heroImage =
+    gallery.find((img) => img.url.includes("d8436a85"))?.url ??
+    featuredProject?.cover_image_url ??
+    null;
+
   return (
     <>
-      <Hero stats={stats} />
+      <Hero
+        stats={stats}
+        heroImageUrl={heroImage}
+        location={featuredProject?.location}
+      />
       <HeroFeatures />
       <FeaturedProject project={featuredProject} />
       <AboutSection settings={settings} />
