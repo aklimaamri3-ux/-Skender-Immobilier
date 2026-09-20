@@ -27,7 +27,7 @@ export function ProjectsPreview({
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.slice(0, 3).map((project) => (
+          {projects.slice(0, 6).map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>

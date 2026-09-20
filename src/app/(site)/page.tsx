@@ -4,11 +4,14 @@ import { FeaturedProject } from "@/components/home/featured-project";
 import { AboutSection } from "@/components/home/about-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { ProjectsPreview } from "@/components/home/projects-preview";
+import { AvailableProperties } from "@/components/home/available-properties";
+import { RentalCta } from "@/components/home/rental-cta";
 import { WhyUsSection } from "@/components/home/why-us-section";
 import { GallerySection } from "@/components/home/gallery-section";
 import { ReviewsSection } from "@/components/home/reviews-section";
 import { ContactSection } from "@/components/home/contact-section";
 import {
+  getAvailableProperties,
   getFeaturedProject,
   getGalleryImages,
   getPublishedProjects,
@@ -16,15 +19,17 @@ import {
   getSettings,
 } from "@/lib/data/public";
 import { getLocale } from "@/i18n/get-locale";
+import { whatsappLink } from "@/lib/utils";
 
 export default async function HomePage() {
-  const [settings, featuredProject, projects, reviews, gallery, locale] =
+  const [settings, featuredProject, projects, reviews, gallery, properties, locale] =
     await Promise.all([
       getSettings(),
       getFeaturedProject(),
       getPublishedProjects(),
       getPublishedReviews(),
       getGalleryImages(),
+      getAvailableProperties(),
       getLocale(),
     ]);
 
@@ -40,6 +45,8 @@ export default async function HomePage() {
     featuredProject?.cover_image_url ??
     null;
 
+  const otherProjects = projects.filter((p) => p.id !== featuredProject?.id);
+
   return (
     <>
       <Hero
@@ -50,12 +57,19 @@ export default async function HomePage() {
       />
       <HeroFeatures />
       <FeaturedProject project={featuredProject} />
-      <AboutSection settings={settings} />
+      <ProjectsPreview projects={otherProjects} />
+      <AvailableProperties properties={properties} />
+      <RentalCta
+        whatsappHref={whatsappLink(
+          settings,
+          `Bonjour ${settings.name}, je suis intéressé(e) par une location.`
+        )}
+      />
       <ServicesSection />
-      <ProjectsPreview projects={projects} />
       <WhyUsSection />
       <GallerySection images={gallery} />
       <ReviewsSection reviews={reviews} />
+      <AboutSection settings={settings} />
       <ContactSection settings={settings} projects={projects} />
     </>
   );
