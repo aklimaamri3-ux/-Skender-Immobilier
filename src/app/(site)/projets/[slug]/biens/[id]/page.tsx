@@ -147,13 +147,33 @@ export default async function PropertyDetailPage({
             <Field icon={Compass} label="Orientation" value={property.orientation ?? "—"} />
           </dl>
 
+          {property.plan_url && (
+            <div className="mt-8">
+              <h2 className="mb-4 font-display text-xl font-semibold">Plan 3D du bien</h2>
+              <a
+                href={property.plan_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative block aspect-[10/7] w-full max-w-3xl overflow-hidden rounded-xl border border-or/20 bg-charbon"
+              >
+                <Image
+                  src={property.plan_url}
+                  alt="Plan du bien"
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 720px, 100vw"
+                />
+              </a>
+            </div>
+          )}
+
           {project && (
             <div className="mt-8">
               <h2 className="mb-4 font-display text-xl font-semibold">Localisation</h2>
               <p className="mb-4 flex items-center gap-2 text-blanc/75">
                 <MapPin size={18} className="shrink-0 text-or" />
                 {project.location}
-                {project.city && project.city !== project.location ? `, ${project.city}` : ""}
+                {project.city && !project.location.toLowerCase().includes(project.city.toLowerCase()) ? `, ${project.city}` : ""}
               </p>
               <div className="aspect-video overflow-hidden rounded-xl border border-or/20">
                 <iframe
@@ -202,26 +222,6 @@ export default async function PropertyDetailPage({
                   Voir la visite virtuelle 3D
                 </a>
               )}
-            </div>
-          )}
-
-          {property.plan_url && (
-            <div className="mt-8">
-              <h2 className="mb-4 font-display text-xl font-semibold">Plan de l&apos;appartement</h2>
-              <a
-                href={property.plan_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative block aspect-video w-full max-w-md overflow-hidden rounded-xl border border-or/20 bg-charbon"
-              >
-                <Image
-                  src={property.plan_url}
-                  alt="Plan du bien"
-                  fill
-                  className="object-contain"
-                  sizes="400px"
-                />
-              </a>
             </div>
           )}
         </div>
