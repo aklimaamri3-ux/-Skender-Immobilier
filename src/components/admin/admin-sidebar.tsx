@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   BarChart3,
   Building2,
@@ -38,10 +38,6 @@ export function AdminSidebar({
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   return (
     <>
@@ -100,6 +96,7 @@ export function AdminSidebar({
             <Link
               key={href}
               href={href}
+              onClick={() => setOpen(false)}
               className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors ${
                 active
                   ? "bg-or/15 text-or-clair"
