@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { prepareImage } from "@/lib/image";
 
 export async function saveProperty(formData: FormData) {
   const supabase = await createClient();
@@ -42,10 +43,11 @@ export async function saveProperty(formData: FormData) {
 
   const planFile = formData.get("plan") as File | null;
   if (planFile && planFile.size > 0) {
-    const path = `plans/${propertyId}/${Date.now()}-${planFile.name}`;
+    const img = await prepareImage(planFile, { maxWidth: 2000, quality: 90 });
+    const path = `plans/${propertyId}/${img.fileName}`;
     const { error: uploadError } = await supabase.storage
       .from("property-media")
-      .upload(path, planFile, { upsert: true });
+      .upload(path, img.body, { contentType: img.contentType, upsert: true });
     if (!uploadError) {
       const { data } = supabase.storage.from("property-media").getPublicUrl(path);
       await supabase.from("properties").update({ plan_url: data.publicUrl }).eq("id", propertyId);
@@ -55,10 +57,11 @@ export async function saveProperty(formData: FormData) {
   const photoFiles = formData.getAll("photos") as File[];
   for (const file of photoFiles) {
     if (!file || file.size === 0) continue;
-    const path = `photos/${propertyId}/${Date.now()}-${file.name}`;
+    const img = await prepareImage(file);
+    const path = `photos/${propertyId}/${img.fileName}`;
     const { error: uploadError } = await supabase.storage
       .from("property-media")
-      .upload(path, file);
+      .upload(path, img.body, { contentType: img.contentType });
     if (!uploadError) {
       const { data } = supabase.storage.from("property-media").getPublicUrl(path);
       await supabase.from("property_images").insert({

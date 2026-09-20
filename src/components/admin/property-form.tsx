@@ -1,4 +1,5 @@
 import { saveProperty, deletePropertyImage } from "@/lib/actions/properties";
+import { ImageInput } from "@/components/admin/image-input";
 import type { Project, Property, PropertyImage } from "@/types/database";
 
 export function PropertyForm({
@@ -115,7 +116,7 @@ export function PropertyForm({
       </Field>
 
       <Field label="Plan (image)">
-        <input type="file" name="plan" accept="image/*" className="input" />
+        <ImageInput name="plan" maxWidth={2000} quality={0.9} />
       </Field>
 
       <Field label="Plan 3D / Visite virtuelle (lien Matterport, Kuula, vidéo 360°...)">
@@ -128,7 +129,7 @@ export function PropertyForm({
       </Field>
 
       <Field label="Photos">
-        <input type="file" name="photos" accept="image/*" multiple className="input" />
+        <ImageInput name="photos" multiple />
       </Field>
 
       <button type="submit" className="btn-gold">

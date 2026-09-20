@@ -1,4 +1,5 @@
 import { saveProject, deleteProjectImage } from "@/lib/actions/projects";
+import { ImageInput } from "@/components/admin/image-input";
 import type { Project, ProjectImage } from "@/types/database";
 
 export function ProjectForm({
@@ -148,11 +149,11 @@ export function ProjectForm({
       </div>
 
       <Field label="Image de couverture">
-        <input type="file" name="cover_image" accept="image/*" className="input" />
+        <ImageInput name="cover_image" />
       </Field>
 
       <Field label="Ajouter des images à la galerie">
-        <input type="file" name="gallery_images" accept="image/*" multiple className="input" />
+        <ImageInput name="gallery_images" multiple />
       </Field>
 
       <button type="submit" className="btn-gold">

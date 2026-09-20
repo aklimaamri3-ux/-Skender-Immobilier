@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { prepareImage } from "@/lib/image";
 
 function slugify(value: string) {
   return value
@@ -50,10 +51,11 @@ export async function saveProject(formData: FormData) {
   const coverFile = formData.get("cover_image") as File | null;
   let coverUrl: string | undefined;
   if (coverFile && coverFile.size > 0) {
-    const path = `covers/${Date.now()}-${coverFile.name}`;
+    const img = await prepareImage(coverFile);
+    const path = `covers/${img.fileName}`;
     const { error: uploadError } = await supabase.storage
       .from("project-media")
-      .upload(path, coverFile, { upsert: true });
+      .upload(path, img.body, { contentType: img.contentType, upsert: true });
     if (!uploadError) {
       const { data } = supabase.storage.from("project-media").getPublicUrl(path);
       coverUrl = data.publicUrl;
@@ -81,10 +83,11 @@ export async function saveProject(formData: FormData) {
   const galleryFiles = formData.getAll("gallery_images") as File[];
   for (const file of galleryFiles) {
     if (!file || file.size === 0) continue;
-    const path = `gallery/${projectId}/${Date.now()}-${file.name}`;
+    const img = await prepareImage(file);
+    const path = `gallery/${projectId}/${img.fileName}`;
     const { error: uploadError } = await supabase.storage
       .from("project-media")
-      .upload(path, file);
+      .upload(path, img.body, { contentType: img.contentType });
     if (!uploadError) {
       const { data } = supabase.storage.from("project-media").getPublicUrl(path);
       await supabase.from("project_images").insert({
