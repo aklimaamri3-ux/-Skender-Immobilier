@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Bath, BedDouble, Car, Compass, Layers, Maximize, MessageCircle, Phone } from "lucide-react";
+import { Bath, BedDouble, Car, Compass, Layers, Maximize, MapPin, MessageCircle, Phone } from "lucide-react";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { VisitRequestForm } from "@/components/forms/visit-request-form";
@@ -146,6 +146,35 @@ export default async function PropertyDetailPage({
             <Field icon={Layers} label="Étage" value={property.floor ?? "—"} />
             <Field icon={Compass} label="Orientation" value={property.orientation ?? "—"} />
           </dl>
+
+          {project && (
+            <div className="mt-8">
+              <h2 className="mb-4 font-display text-xl font-semibold">Localisation</h2>
+              <p className="mb-4 flex items-center gap-2 text-blanc/75">
+                <MapPin size={18} className="shrink-0 text-or" />
+                {project.location}
+                {project.city && project.city !== project.location ? `, ${project.city}` : ""}
+              </p>
+              <div className="aspect-video overflow-hidden rounded-xl border border-or/20">
+                <iframe
+                  title="Localisation du bien"
+                  className="h-full w-full"
+                  loading="lazy"
+                  src={
+                    project.latitude && project.longitude
+                      ? `https://www.google.com/maps?q=${project.latitude},${project.longitude}&z=15&output=embed`
+                      : `https://www.google.com/maps?q=${encodeURIComponent(project.location)}&output=embed`
+                  }
+                />
+              </div>
+              {project.nearby_points && (
+                <p className="mt-3 text-sm text-blanc/60">
+                  <span className="font-medium text-blanc/80">À proximité : </span>
+                  {project.nearby_points}
+                </p>
+              )}
+            </div>
+          )}
 
           {property.plan_3d_url && (
             <div className="mt-8">
