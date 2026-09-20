@@ -11,10 +11,10 @@ export default async function DashboardLayout({
   const newInquiriesCount = await getNewInquiriesCount();
 
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <AdminSidebar adminName={admin.full_name} newInquiriesCount={newInquiriesCount} />
-      <div className="flex-1 overflow-x-hidden">
-        <main className="section-container py-10">{children}</main>
+      <div className="min-w-0 flex-1">
+        <main className="section-container py-6 sm:py-10">{children}</main>
       </div>
     </div>
   );

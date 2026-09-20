@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   BarChart3,
   Building2,
@@ -10,6 +11,8 @@ import {
   Inbox,
   LayoutDashboard,
   LogOut,
+  Menu,
+  X,
   Settings,
   Star,
 } from "lucide-react";
@@ -34,14 +37,60 @@ export function AdminSidebar({
   newInquiriesCount: number;
 }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-or/15 bg-noir-soft">
-      <div className="border-b border-or/10 p-6">
-        <p className="font-display text-lg font-bold gold-gradient-text">
-          SKENDER IMMOBILIER
-        </p>
-        <p className="mt-1 text-xs text-blanc/50">Connecté : {adminName}</p>
+    <>
+    <div className="sticky top-0 z-30 flex items-center justify-between border-b border-or/15 bg-noir-soft px-4 py-3 lg:hidden">
+      <p className="font-display text-base font-bold gold-gradient-text">SKENDER IMMOBILIER</p>
+      <div className="flex items-center gap-2">
+        {newInquiriesCount > 0 && (
+          <Link href="/admin/inquiries" className="rounded-full bg-or px-2 py-0.5 text-xs font-semibold text-noir">
+            {newInquiriesCount}
+          </Link>
+        )}
+        <button
+          type="button"
+          aria-label="Ouvrir le menu"
+          onClick={() => setOpen(true)}
+          className="rounded-md p-2 text-blanc hover:bg-charbon"
+        >
+          <Menu size={24} />
+        </button>
+      </div>
+    </div>
+
+    {open && (
+      <button
+        type="button"
+        aria-label="Fermer le menu"
+        onClick={() => setOpen(false)}
+        className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+      />
+    )}
+
+    <aside
+      className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 flex-col overflow-y-auto border-r border-or/15 bg-noir-soft transition-transform duration-200 lg:sticky lg:top-0 lg:z-auto lg:shrink-0 lg:translate-x-0 ${
+        open ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div className="flex items-start justify-between border-b border-or/10 p-6">
+        <div>
+          <p className="font-display text-lg font-bold gold-gradient-text">SKENDER IMMOBILIER</p>
+          <p className="mt-1 text-xs text-blanc/50">Connecté : {adminName}</p>
+        </div>
+        <button
+          type="button"
+          aria-label="Fermer le menu"
+          onClick={() => setOpen(false)}
+          className="rounded-md p-1 text-blanc/70 hover:bg-charbon lg:hidden"
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <nav className="flex-1 space-y-1 p-4">
@@ -77,5 +126,6 @@ export function AdminSidebar({
         </form>
       </div>
     </aside>
+    </>
   );
 }
